@@ -1,0 +1,205 @@
+body, html {
+    background-color: rgb(41, 10, 38);
+    font-family: 'Comfortaa', sans-serif;
+}
+
+#container {
+    margin: 12px;
+    max-width: 1190px;
+    margin: 0 auto;
+    background-color: rgb(41, 10, 38);
+}
+
+#page-title {
+    font-family: 'Montserrat Subrayada', sans-serif;
+}
+#header::after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+#page {
+    border-top: 1px solid silver;
+    padding-bottom: 20px;
+    margin-bottom: 5px;
+    border-bottom: 1px dashed silver;
+    font-size: 1.1em;
+    color: #FFF;
+    line-height: 1.3em;
+}
+#page::after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+#footer {
+    margin-bottom: 5px;
+    margin-top: 15px;
+}
+#footer::after {
+    content: "";
+    display: table;
+    clear: both;
+}
+#footer div {
+    float: left;
+    width: 45%;
+    color: silver;
+    font-weight: bold;
+    font-size: 1.1em;
+}
+
+#footer a {
+    color: rgb(179, 219, 206);
+
+}
+.neonText {
+    color: #fff;
+    text-shadow:
+        0 0 2px #fff,
+        0 0 4px #fff,
+        0 0 7px #fff,
+        0 0 14px #0fa,
+        0 0 25px #0fa,
+        0 0 44px #0fa,
+        0 0 66px #0fa,
+        0 0 76px #0fa;  
+}
+  
+  h1.neontitle {
+    font-size: 2.8rem;
+    margin: 0px 14px 20px;
+  }
+
+
+#page-title {
+   float: left;
+   width: 50%;
+}
+#title-date {
+    float: right;
+    width: 24%;
+    font-weight: 400;
+    color: cyan;
+    text-align: center;
+    margin-top: 6px;
+    font-size: 1.1em;
+}
+#page-settings {
+    float: right;
+    width: 20%;
+    text-align: right;
+    font-weight: bold;
+    margin-top: 6px;
+}
+
+.onemovie {
+    border-bottom: 5px dashed #333;
+    margin-top: 3px;
+}
+.movie-container {
+    display: grid;
+    grid-template-columns: 75px 1fr 50px 100px;
+    align-self: self-start;
+    gap: 0px 2px ;
+}
+
+.movie-left {
+    text-align: left;
+  }
+
+.movie-right {
+    text-align: right;
+  }
+.rating img {
+    vertical-align: text-top;
+}
+.movie-center {
+    text-align: left;
+    
+}
+.movie-time {
+    background-color: yellowgreen;
+    height: 50px;
+    text-align: center;
+    line-height: 50px;
+    font-weight: bold;
+    font-size: 1.6em;
+}
+.movie-closing {
+    height: 25px;
+    background-color: rgb(18, 99, 61);
+    text-align: center;
+    line-height: 25px;
+    font-size: 1em;
+}
+.movie-rating {
+    background-color: yellowgreen;
+    border-radius: 2px;
+}
+.headertime {
+    display: block; 
+    font-weight: bold;
+}
+
+.movie-title {
+    font-size: 1.2em;
+    margin: 5px 0px 0px 5px;
+}
+.movie-desc {
+    font-size: 0.7em;
+    margin: 5px;
+    margin: 0px 0px 0px 5px;
+}
+
+a.settings {
+    text-decoration: none;
+    color: white;
+}
+.material-symbols-outlined {
+    vertical-align: middle;
+}
+
+/* Responsiivisuus alle 690px tilassa */
+@media (max-width: 690px) {
+    #container {
+        margin: 12px;
+    }
+    #page-title {
+        float: none;
+        width: 100%;
+        text-align: center;
+    }
+
+    #title-date {
+        float: left;
+        width: 50%;
+        text-align: left;
+    }
+
+    #page-settings {
+        float: right;
+        width: 50%;
+    }
+    .headertime {
+        display: inline; 
+    }
+    #footer div {
+        float: none;
+        width: 100%;
+        margin-top: 15px;
+    }
+    .footer-1 {
+        border-bottom: 1px dotted silver;
+    }
+    .movie-time {
+        background-color: yellowgreen;
+        height: 75px;
+        text-align: center;
+        line-height: 75px;
+        font-weight: bold;
+        font-size: 1.5em;
+    }
+}

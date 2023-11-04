@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!-- Omat tyylit -->
+    <link rel="stylesheet" href="css/styles.css">
+    <!-- Google Fonts -->
+    <style>@import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;400;500;600;700&display=swap');</style>
+    <!-- Title Fontti -->
+    <style>@import url('https://fonts.googleapis.com/css2?family=Montserrat+Subrayada&display=swap');</style>
+    <!-- Google Symbols -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🦄</text></svg>"></link>
+    <title>Finnkinotin</title>
+</head>
+<body>
+<div id="container">
+    <div id="header">
+        <div id="page-title"><h1 class="neontitle neonText">Finnkinotin</h1></div>
+        <div id="page-settings"><a class="settings" href="#">SETTINGS <span class="material-symbols-outlined">menu</span></a></div>
+        <div id="title-date"><span class="headerdate">23.10.2023</span> <span class="headertime">18.22</span></div>
+    </div>
+    <div id="page">
+        <div class="movie-container">
+            <div class="left movie-time">13.50</div>
+            <div class="movie-center">
+                <div class="movie-title">Tuntematon sotilas</div>
+                <div class="movie-desc">Scifi | 105 min | Etc.</div>
+            </div>
+            <div class="movie-right rating">R</div>
+            <div class="movie-right movie-studio">Marvel</div>
+        </div>
+        <div class="movie-container">
+            <div class="left movie-closing">13.50</div>
+            <div class="movie-center movie-desc">Lisätietoa alla</div>
+            <div class="movie-right"></div>
+            <div class="movie-right movie-studio">Watch Trailer</div>
+        </div>
+        <div id="showtime"></div>
+        
+    </div>
+    <div id="footer">
+        <div class="footer-1">Footer 1</div>
+        <div class="footer-2">This site is using Finnkino's Open XML API<br><a href="https://www.finnkino.fi/xml">https://www.finnkino.fi/xml</a></div>
+    </div>
+</div>
+
+<script src="js/ajax.js"></script>
+
+</body>
+</html>
