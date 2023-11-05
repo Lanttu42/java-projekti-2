@@ -1,5 +1,12 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fi">
+<!-- 
+    FinnKinotin emerged from the schoold project where I had a challenge to create a website using Ajax - my all time favorite coding nemesis. 
+    I managed to create this and actually I am going to use this! This solves the real life issue: Imagine that you and your friends are having 
+    a nice friday evening in the city. Then suddenly you realize that you should see a movie. And then you realize that Finnkino site is not very 
+    adHoc watcher friendly. This application gives you an ability to show Only rest of the todays movies which are still showing. Nothing else. 
+    It gives a direct link to purchase tickets also. No fuzz - no ads - no clutter. Only movie list.
+-->
 <head>
     <meta charset="UTF-8">
     <!-- Omat tyylit -->
@@ -19,7 +26,7 @@
 <div id="container">
     <div id="header">
         <div id="page-title"><h1 class="neontitle neonText">Finnkinotin</h1></div>
-        <div id="page-settings"><a class="settings" href="#">SETTINGS <span class="material-symbols-outlined">menu</span></a></div>
+        <div id="page-settings"><!-- No Settings this time -->></div>
         <div id="title-date"><span class="headerdate">23.10.2023</span> <span class="headertime">18.22</span></div>
     </div>
     <div id="page">
@@ -35,6 +42,28 @@
                 
             </select>
         </div>
+
+
+        <div class="onemovie">
+            <div class="movie-container">
+                <div class="left">
+                    <div class="movie-time">3Min</div>
+                    <div class="left movie-closing"><small>Loppuu</small><br>14.44</div>
+                </div>
+                <div class="movie-center">
+                    <div class="movie-title">Critters II : Toinen pesue<img src="%RatingImageUrl%" class="movie-mobile-rating-img" alt="%Rating%"></div>
+                    <div class="movie-info"><strong>2D</strong>, Scifi, 12 | Kesto 1t 22min. englanti, ranska | Helsinki 1 maxim</div>
+                    <div class="movie-desc">Edellinen Night Visions -avajaiselokuvana nähty korealaistuotanto oli Bong Joon Hon Parasite, josta kasvoi globaali ilmiö ja kaikki ällikällä lyönyt Oscar-magneetti. Concrete Utopian kohdalla ennusmerkit ovat jo ilmassa. Kotimaansa teattereissa lähes neljä</div>
+                    <div class="movie-links"><button>Osta liput</button> <button>Finnkino</button></div>
+                </div>
+                <div class="movie-right">
+                    <div class="movie-image"><img src="http://media.finnkino.fi/1012/Event_13866/landscape_small/MichaelMonroeDokumenttielokuva_444.jpg" style="height:auto;" alt="Title Image"></div>
+                    <div class="movie-links"><button style="width:100%; margin-right: 0px;">Osta liput</button>
+                </div>
+            </div>
+        </div>
+
+
         <div id="showtime"></div>
         
     </div>

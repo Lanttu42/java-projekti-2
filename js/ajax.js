@@ -67,7 +67,7 @@ const template = `
     <div class="movie-container">
         <div class="left">
             <div class="movie-time">%dttmShowStart%</div>
-            <div class="left movie-closing">Loppuu<br>%dttmShowEnd%</div>
+            <div class="left movie-closing"><small>Loppuu</small><br>%dttmShowEnd%</div>
         </div>
         <div class="movie-center">
             <div class="movie-title">%Title% <img src="%RatingImageUrl%" class="movie-mobile-rating-img" alt="%Rating%"></div>
@@ -90,25 +90,32 @@ function fillTemplate(data) { // I get the data as parameter from the getNextMov
     });
 }
 
+function abshort(moviesDb) {
+    const moviesArray = Object.values(moviesDb);
+    moviesArray.sort((a, b) => new Date(a.dttmShowStart) - new Date(b.dttmShowStart));
+    return moviesArray;
+}
 
 function getNextMovies() {
     const thetime = new Date();
-    //const timeNow = thetime.getTime();
-    const timeNow = thetime.setHours(19,0,0,0); 
-    //console.log(timeNow);
+    const shortedDb = abshort(moviesDb);
+    //console.log(moviesDb);
+    const timeNow = thetime.getTime(); 
     const timeMidnight = thetime.setHours(24,0,0,0); 
-    //console.log(timeMidnight);
     let htmlData = "<h2>Next Movies</h2><br>";
-    
     // const timestamp = Date.parse(dateTimeString);
-    for (let movieId in moviesDb) {
-        if (moviesDb.hasOwnProperty(movieId)) {
-            const movie = moviesDb[movieId];
+    for (let movieId in shortedDb) {
+        if (shortedDb.hasOwnProperty(movieId)) {
+            const movie = shortedDb[movieId];
             //console.log(movie.dttmShowStart);
             const begins = Date.parse(movie.dttmShowStart);
+            let movieBegins = humanTime(begins);
+            const isItSoon = parseInt((begins - timeNow) / (60000));
+            if (isItSoon < 30) movieBegins = isItSoon+"Min";
+            if (isItSoon < 2) movieBegins = "RUN";
             if (begins > timeNow) {
                 const currentMovie = {
-                dttmShowStart: humanTime(begins),
+                dttmShowStart: movieBegins,
                 dttmShowEnd: humanTime(Date.parse(movie.dttmShowEnd)),
                 Title: movie.Title,
                 LengthInMinutes: movie.LengthInMinutes,
@@ -197,7 +204,7 @@ async function initialize() {
     showtime.innerHTML = getNextMovies();
 }
     
-initialize();
+// initialize();
 
 
 
