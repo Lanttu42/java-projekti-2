@@ -244,7 +244,7 @@ button.myButton:active {
     }
     .movie-container {
         display: grid;
-        grid-template-columns: 75px 1fr;
+        grid-template-columns: 50px 1fr;
         align-self: self-start;
         gap: 0px 2px ;
     }
@@ -253,10 +253,13 @@ button.myButton:active {
         text-align: center;
         line-height: 50px;
         font-weight: bold;
-        font-size: 1.2em;
+        font-size: 1.1em;
     }
     .movie-title {
         font-size: 1em;
+    }
+    .movie-desc, .movie-info {
+        font-size: 0.7em;
     }
     .mobile-rating {
         display: block;
