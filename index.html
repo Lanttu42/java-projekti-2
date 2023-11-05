@@ -23,20 +23,17 @@
         <div id="title-date"><span class="headerdate">23.10.2023</span> <span class="headertime">18.22</span></div>
     </div>
     <div id="page">
-        <div class="movie-container">
-            <div class="left movie-time">13.50</div>
-            <div class="movie-center">
-                <div class="movie-title">Tuntematon sotilas</div>
-                <div class="movie-desc">Scifi | 105 min | Etc.</div>
-            </div>
-            <div class="movie-right rating">R</div>
-            <div class="movie-right movie-studio">Marvel</div>
-        </div>
-        <div class="movie-container">
-            <div class="left movie-closing">13.50</div>
-            <div class="movie-center movie-desc">Lisätietoa alla</div>
-            <div class="movie-right"></div>
-            <div class="movie-right movie-studio">Watch Trailer</div>
+        <label for="eventType">Valitse tapahtumalaji: </label>
+            <select name="eventType" id="selectType">
+                <option value="Movie">Elokuva</option>
+                <option value="LiveEvent">Tapahtuma</option>
+            </select>
+        <div id="SelectCity">
+            <label for="eventCity">Valitse kaupunki ja teatteri: </label>
+            <select name="eventCity" id="selectTheater">
+                <option value="1029">Kaikki</option>
+                
+            </select>
         </div>
         <div id="showtime"></div>
         

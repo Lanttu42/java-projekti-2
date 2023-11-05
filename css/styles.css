@@ -101,7 +101,7 @@ body, html {
 }
 .movie-container {
     display: grid;
-    grid-template-columns: 75px 1fr 50px 100px;
+    grid-template-columns: 75px 1fr 120px;
     align-self: self-start;
     gap: 0px 2px ;
 }
@@ -120,8 +120,14 @@ body, html {
     text-align: left;
     
 }
+
+.movie-title {
+    font-size: 1.2em;
+    margin: 5px 0px 0px 5px;
+    color: #FFF;
+}
 .movie-time {
-    background-color: yellowgreen;
+    color:  rgb(182, 250, 46);
     height: 50px;
     text-align: center;
     line-height: 50px;
@@ -129,29 +135,44 @@ body, html {
     font-size: 1.6em;
 }
 .movie-closing {
-    height: 25px;
     background-color: rgb(18, 99, 61);
     text-align: center;
     line-height: 25px;
-    font-size: 1em;
+    font-size: 0.9em;
+    color: #b9b9b9;
 }
-.movie-rating {
-    background-color: yellowgreen;
-    border-radius: 2px;
+
+.movie-closing::after {
+    clear:both;
+}
+.movie-rating img {
+    height: 30px;
 }
 .headertime {
     display: block; 
     font-weight: bold;
 }
 
-.movie-title {
-    font-size: 1.2em;
-    margin: 5px 0px 0px 5px;
-}
+
 .movie-desc {
-    font-size: 0.7em;
+    font-size: 0.9em;
     margin: 5px;
     margin: 0px 0px 0px 5px;
+    color:rgb(161, 161, 161);
+    margin-bottom: 5px;
+}
+
+.movie-info {
+    font-size: 0.9em;
+    margin: 5px;
+    margin: 0px 0px 0px 5px;
+    color:rgb(161, 161, 161);
+    margin-bottom: 3px;
+
+}
+
+[class^="movie-mobile-"] {
+    display: none;
 }
 
 a.settings {
@@ -161,6 +182,33 @@ a.settings {
 .material-symbols-outlined {
     vertical-align: middle;
 }
+
+button {
+	box-shadow: 0px 1px 0px 0px #000000;
+	background:linear-gradient(to bottom, #ffec73 5%, #e3a035 100%);
+	background-color:#ffec73;
+	border-radius:3px;
+	border:1px solid #c7b293;
+	display:inline-block;
+	cursor:pointer;
+	color:#000000;
+	font-family:Arial;
+	font-size:1em;
+	font-weight:bold;
+	padding:3px 14px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #f2e796;
+    margin: 0px 0px 0px 5px
+}
+button:hover {
+	background:linear-gradient(to bottom, #e3a035 5%, #ffec73 100%);
+	background-color:#e3a035;
+}
+button.myButton:active {
+	position:relative;
+	top:1px;
+}
+
 
 /* Responsiivisuus alle 690px tilassa */
 @media (max-width: 690px) {
@@ -194,12 +242,43 @@ a.settings {
     .footer-1 {
         border-bottom: 1px dotted silver;
     }
+    .movie-container {
+        display: grid;
+        grid-template-columns: 75px 1fr;
+        align-self: self-start;
+        gap: 0px 2px ;
+    }
     .movie-time {
-        background-color: yellowgreen;
-        height: 75px;
+        height: 50px;
         text-align: center;
-        line-height: 75px;
+        line-height: 50px;
         font-weight: bold;
-        font-size: 1.5em;
+        font-size: 1.2em;
+    }
+    .movie-title {
+        font-size: 1em;
+    }
+    .mobile-rating {
+        display: block;
+    }
+    .rating {
+        display: none;
+    }
+
+    .movie-mobile-rating {
+        display: block;
+    }
+    .rating {
+        display: none;
+    }
+
+    .movie-mobile-links {
+        display: block;
+    }
+    .movie-right {
+        display: none;
+    }
+    .movie-mobile-rating-img {
+        height: 18px;
     }
 }
