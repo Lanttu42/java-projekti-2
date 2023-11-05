@@ -13,6 +13,7 @@
 
 
 let moviesDb = {}; // This is All Movies Database. Empty yet. Gonna fill it.
+
 const selectType = document.getElementById("selectType");
 const movieLocation = document.getElementById("selectTheater");
 const showtime = document.getElementById('showtime');
@@ -28,7 +29,26 @@ movieLocation.addEventListener('change',  function() {
     selectedTheater = movieLocation.value;
     initialize();
 });
+let movieDetails = {};
+async function getMovieData(title, year) {
+    const apiKey = '3ec3720b';
+    const url = `https://www.omdbapi.com/?t=${encodeURIComponent(title)}&y=${year}&apikey=${apiKey}`;
 
+    const defaultMovieData = {};
+
+    try {
+        const response = await fetch(url);
+        if (!response.ok) {
+            throw new Error('Network response was not ok ' + response.statusText);
+        }
+        const movieData = await response.json();
+        return movieData;
+    } catch (error) {
+        console.error('There has been a problem with your fetch operation:', error);
+        // Return the default object with an error code for every property
+        return defaultMovieData;
+    }
+}
 
 
 // This is used to format timestamp into more userfriendly 13.45 format
@@ -70,14 +90,16 @@ const template = `
             <div class="left movie-closing"><small>Loppuu</small><br>%dttmShowEnd%</div>
         </div>
         <div class="movie-center">
-            <div class="movie-title">%Title% <img src="%RatingImageUrl%" class="movie-mobile-rating-img" alt="%Rating%"></div>
-            <div class="movie-info"><strong>%PresentationMethod%</strong> | %Genres% | Rated: %Rating%</div>
-            <div class="movie-desc">Kesto: %LengthInMinutes% min. | %SpokenLanguage% | %TheatreAndAuditorium%</div>
-            <div class="movie-mobile-links"><button>Osta liput</button> | <button>Finnkino</button></div>
+            <div class="movie-title">%Title%<img src="%RatingImageUrl%" class="movie-mobile-rating-img" alt="%Rating%"></div>
+            <div class="movie-info"><strong>%PresentationMethod%</strong> - %Genres% - Rated: %Rating% - Kesto: %LengthInMinutes% min. | %SpokenLanguage% | %TheatreAndAuditorium%<br>
+            %Director% %IMDB% %Actors%</div>
+            <div class="movie-desc">%Plot%</div>
+            <div class="movie-links"><a class="gotoFinnkino" target="_blank" href="%EventURL%">Siirry Finnkinon sivustolle >>></a></div>
+            <div class="movie-mobile-ticketlinks"><a href="%ShowURL%" class="movie-mobile-BuyTickets">Osta liput</a></div>
         </div>
         <div class="movie-right">
-            <div class="movie-rating"><img src="%RatingImageUrl%" alt="%Rating%"></div>
-            <div class="movie-links"><button>Osta liput</button><br><button>Finnkino</button></div>
+            <div class="movie-image"><img src="%movieImage%" style="height:auto;" alt="%Title% - kuva elokuvasta"></div>
+            <div class="movie-ticketlinks"><a href="%ShowURL%" class="movie-BuyTickets">Osta liput</a></div>
         </div>
     </div>
 </div>
@@ -85,6 +107,7 @@ const template = `
 
 // I use this to fill the template. 
 function fillTemplate(data) { // I get the data as parameter from the getNextMovies or similar function  
+    console.log("Filling...");
     return template.replace(/%(\w+)%/g, (match, p1) => { // Data and Template has the same names. Data properties and %strings% in template. With regular expression I match those.
         return data[p1] || '';  // If there is no match, it returns '' for that property.
     });
@@ -96,16 +119,19 @@ function abshort(moviesDb) {
     return moviesArray;
 }
 
-function getNextMovies() {
+async function getNextMovies() {
     const thetime = new Date();
     const shortedDb = abshort(moviesDb);
     //console.log(moviesDb);
-    const timeNow = thetime.getTime(); 
+    const timeNow = thetime.setHours(20,0,0,0); 
+    //const timeNow = thetime.getTime(); 
     const timeMidnight = thetime.setHours(24,0,0,0); 
     let htmlData = "<h2>Next Movies</h2><br>";
     // const timestamp = Date.parse(dateTimeString);
+    let debugCount = 0;
     for (let movieId in shortedDb) {
-        if (shortedDb.hasOwnProperty(movieId)) {
+
+        if ((shortedDb.hasOwnProperty(movieId)) && (debugCount < 3)) {
             const movie = shortedDb[movieId];
             //console.log(movie.dttmShowStart);
             const begins = Date.parse(movie.dttmShowStart);
@@ -114,24 +140,34 @@ function getNextMovies() {
             if (isItSoon < 30) movieBegins = isItSoon+"Min";
             if (isItSoon < 2) movieBegins = "RUN";
             if (begins > timeNow) {
-                const currentMovie = {
-                dttmShowStart: movieBegins,
-                dttmShowEnd: humanTime(Date.parse(movie.dttmShowEnd)),
-                Title: movie.Title,
-                LengthInMinutes: movie.LengthInMinutes,
-                Rating: movie.Rating,
-                ProductionYear: movie.ProductionYear,
-                Genres: movie.Genres,
-                Theatre: movie.Theatre,
-                TheatreAuditorium: movie.TheatreAuditorium,
-                PresentationMethod: movie.PresentationMethod,
-                SpokenLanguage: movie.SpokenLanguage.split('\n')[1].trim(), // This went full ape nuts. When I converted this XML to array I converted nested childs to Strings ... 
-                RatingImageUrl: movie.RatingImageUrl,
-                TheatreAndAuditorium: movie.TheatreAndAuditorium,
-                ShowURL: movie.ShowURL
-                }
-                //console.log(movie.ShowUrl);
+                await getMovieData(movie.Title, movie.ProductionYear).then(movieDetails => {
+                    console.log(movieDetails);
+                    let currentMovie = {
+                    dttmShowStart: movieBegins,
+                    dttmShowEnd: humanTime(Date.parse(movie.dttmShowEnd)),
+                    Title: movie.Title,
+                    LengthInMinutes: movie.LengthInMinutes,
+                    Rating: movie.Rating,
+                    ProductionYear: movie.ProductionYear,
+                    Genres: movie.Genres,
+                    Theatre: movie.Theatre,
+                    movieImage: movie.Images.split('\n')[4].trim(),
+                    TheatreAuditorium: movie.TheatreAuditorium,
+                    PresentationMethod: movie.PresentationMethod,
+                    SpokenLanguage: movie.SpokenLanguage.split('\n')[1].trim(), // This went full ape nuts. When I converted this XML to array I converted nested childs to Strings ... 
+                    RatingImageUrl: movie.RatingImageUrl,
+                    EventURL: movie.EventURL,
+                    TheatreAndAuditorium: movie.TheatreAndAuditorium,
+                    ShowURL: movie.ShowURL,
+                    Plot: movieDetails.Plot,
+                    Actors: movieDetails.Actors ? "Pääosassa :" + movieDetails.Actors : "Pääosassa : N/A",
+                    Director: movieDetails.Director ? "Ohjaaja: " + movieDetails.Director : "Ohjaaja: N/A",
+                    IMDB: movieDetails.imdbRating ? "IMDB pisteet: " + movieDetails.imdbRating : "IMDB pisteet: N/A"
+                
+                };
                 htmlData += fillTemplate(currentMovie);
+                });
+                debugCount++; // Debug counter
             } else {
                 console.log("Tapahtuma / elokuva on menneisyydessä");
             }
@@ -201,10 +237,10 @@ async function initialize() {
     showtime.innerHTML = "";
     await getCities();
     await fetchSchedule();
-    showtime.innerHTML = getNextMovies();
+    showtime.innerHTML = await getNextMovies();
 }
-    
-// initialize();
+
+initialize();
 
 
 

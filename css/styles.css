@@ -154,23 +154,26 @@ body, html {
     font-weight: bold;
 }
 
+.movie-info {
+    font-size: 0.8em;
+    margin: 5px;
+    margin: 0px 0px 0px 5px;
+    color:rgb(170, 170, 170);
+    margin-bottom: 8px;
+    line-height: 1.1em;
 
+}
 .movie-desc {
     font-size: 0.9em;
     margin: 5px;
     margin: 0px 0px 0px 5px;
-    color:rgb(161, 161, 161);
-    margin-bottom: 5px;
-}
-
-.movie-info {
-    font-size: 0.9em;
-    margin: 5px;
-    margin: 0px 0px 0px 5px;
-    color:rgb(161, 161, 161);
-    margin-bottom: 3px;
+    color:rgb(240, 240, 240);
+    margin-bottom: 8px;
+    line-height: 1.1em;
 
 }
+
+
 
 [class^="movie-mobile-"] {
     display: none;
@@ -184,28 +187,23 @@ a.settings {
     vertical-align: middle;
 }
 
-button {
-	box-shadow: 0px 1px 0px 0px #000000;
-	background:linear-gradient(to bottom, #ffec73 5%, #e3a035 100%);
-	background-color:#ffec73;
-	border:1px solid #c7b293;
-	display:inline-block;
-	cursor:pointer;
-	color:#000000;
-	font-family:Arial;
-	font-size:1em;
-	font-weight:bold;
-	padding:3px 14px;
-	text-decoration:none;
-	text-shadow:0px 1px 0px #f2e796;
+.movie-gotoFinnkino {
+    font-size: 1em;
+    color: orange;
+    text-decoration: none;
 }
-button:hover {
-	background:linear-gradient(to bottom, #e3a035 5%, #ffec73 100%);
-	background-color:#e3a035;
+
+.movie-ticketlinks {
+    background-color: greenyellow;
+    text-align: center;
 }
-button.myButton:active {
-	position:relative;
-	top:1px;
+.movie-BuyTickets {
+    color: rgb(110, 60, 60);
+    text-decoration: none;
+    font-weight: Bold;
+    line-height: 2em;
+    font-size: 1.3em;
+    width: 100%;
 }
 
 
@@ -259,8 +257,15 @@ button.myButton:active {
     .movie-title {
         font-size: 1em;
     }
-    .movie-desc, .movie-info {
+    .movie-info {
         font-size: 0.7em;
+        margin-bottom: 5px;
+    }
+
+    .movie-desc {
+        font-size: 0.8em;
+        color: #FFF;
+        margin-bottom: 5px;
     }
     .mobile-rating {
         display: block;
@@ -293,4 +298,29 @@ button.myButton:active {
     .movie-closing small {
         font-size: 0.7em;
     }
+
+    .movie-mobile-ticketlinks {
+        background-color: greenyellow;
+        text-align: center;
+        display: block;
+        width: 180px;
+        margin: 5px 10px 20px 5px;
+    }
+    .movie-mobile-BuyTickets {
+        color: rgb(110, 60, 60);
+        text-decoration: none;
+        font-weight: Bold;
+        line-height: 1.4em;
+        font-size: 1.2em;
+        display:block;
+    }
+    .mobie-ticketslinks {
+        display: none;
+    }
+    .movie-gotoFinnkino {
+        font-size: 1em;
+        color: orange;
+        text-decoration: none;
+    }
+    
 }
