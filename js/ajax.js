@@ -23,13 +23,19 @@ selectType.addEventListener('change',  function() {
     selectedType = selectType.value;
     initialize();
 });
+let Theaters = {};
 
-let selectedTheater = document.getElementById("selectTheater").value
+let selectedTheater = getLatestTheaterID();
+
 movieLocation.addEventListener('change',  function() {
     selectedTheater = movieLocation.value;
+    storeLatestTheaterID(selectedTheater);
     initialize();
 });
+
+
 let movieDetails = {};
+
 async function getMovieData(title, year) {
     const apiKey = '3ec3720b';
     const url = `https://www.omdbapi.com/?t=${encodeURIComponent(title)}&y=${year}&apikey=${apiKey}`;
@@ -48,6 +54,21 @@ async function getMovieData(title, year) {
         // Return the default object with an error code for every property
         return defaultMovieData;
     }
+}
+
+
+
+function getLatestTheaterID() {
+    let cityID = localStorage.getItem('FavoriteTheaterID');
+    console.log(cityID);
+    if (!cityID) {
+        cityID = 1014;
+    }
+    return parseInt(cityID);
+}
+
+function storeLatestTheaterID(thisID) {
+    localStorage.setItem('FavoriteTheaterID', parseInt(thisID));
 }
 
 
@@ -71,9 +92,17 @@ async function getCities() {
         const selectBox = document.getElementById('selectTheater');
         theaterAreas.forEach(theaterArea => {
             const option = document.createElement('option');
-            option.value = theaterArea.querySelector('ID').textContent;
-            option.textContent = theaterArea.querySelector('Name').textContent;
-            selectBox.appendChild(option);
+            const thiscityID = theaterArea.querySelector('ID').textContent;
+            if (thiscityID !== "1029") {
+                option.value = thiscityID;
+                option.textContent = theaterArea.querySelector('Name').textContent;
+                selectBox.appendChild(option);
+                Theaters[thiscityID] = option.textContent;
+                if (thiscityID == selectedTheater) {
+                    option.selected = true;
+                    console.log("JEP!");
+                }
+            }
         });
     } catch (error) {
         console.error('Error fetching or parsing theater area data:', error);
@@ -94,7 +123,7 @@ const template = `
             <div class="movie-info"><strong>%PresentationMethod%</strong> - %Genres% - Rated: %Rating% - Kesto: %LengthInMinutes% min. | %SpokenLanguage% | %TheatreAndAuditorium%<br>
             %Director% %IMDB% %Actors%</div>
             <div class="movie-desc">%Plot%</div>
-            <div class="movie-links"><a class="gotoFinnkino" target="_blank" href="%EventURL%">Siirry Finnkinon sivustolle >>></a></div>
+            <div class="movie-links"><a class="gotoFinnkino" target="_blank" href="%EventURL%">Siirry Finnkinon sivustolle</a></div>
             <div class="movie-mobile-ticketlinks"><a href="%ShowURL%" class="movie-mobile-BuyTickets">Osta liput</a></div>
         </div>
         <div class="movie-right">
@@ -107,7 +136,7 @@ const template = `
 
 // I use this to fill the template. 
 function fillTemplate(data) { // I get the data as parameter from the getNextMovies or similar function  
-    console.log("Filling...");
+    //console.log("Filling...");
     return template.replace(/%(\w+)%/g, (match, p1) => { // Data and Template has the same names. Data properties and %strings% in template. With regular expression I match those.
         return data[p1] || '';  // If there is no match, it returns '' for that property.
     });
@@ -123,25 +152,29 @@ async function getNextMovies() {
     const thetime = new Date();
     const shortedDb = abshort(moviesDb);
     //console.log(moviesDb);
-    const timeNow = thetime.setHours(20,0,0,0); 
-    //const timeNow = thetime.getTime(); 
+    // const timeNow = thetime.setHours(19,0,0,0); 
+    const timeNow = thetime.getTime(); 
     const timeMidnight = thetime.setHours(24,0,0,0); 
-    let htmlData = "<h2>Next Movies</h2><br>";
+    let htmlData = `<h2>Seuraavat elokuvat kohteessa: ${Theaters[selectedTheater]}</h2><br>`;
     // const timestamp = Date.parse(dateTimeString);
     let debugCount = 0;
+    let apicount = 0;
     for (let movieId in shortedDb) {
-
-        if ((shortedDb.hasOwnProperty(movieId)) && (debugCount < 3)) {
+        
+        if ((shortedDb.hasOwnProperty(movieId)) && (debugCount < 3)) { // Debug mode
+        //if (shortedDb.hasOwnProperty(movieId)) {
             const movie = shortedDb[movieId];
             //console.log(movie.dttmShowStart);
             const begins = Date.parse(movie.dttmShowStart);
             let movieBegins = humanTime(begins);
             const isItSoon = parseInt((begins - timeNow) / (60000));
+            
             if (isItSoon < 30) movieBegins = isItSoon+"Min";
             if (isItSoon < 2) movieBegins = "RUN";
             if (begins > timeNow) {
                 await getMovieData(movie.Title, movie.ProductionYear).then(movieDetails => {
-                    console.log(movieDetails);
+                    apicount++;
+                    // console.log(movieDetails);
                     let currentMovie = {
                     dttmShowStart: movieBegins,
                     dttmShowEnd: humanTime(Date.parse(movie.dttmShowEnd)),
@@ -165,13 +198,22 @@ async function getNextMovies() {
                     IMDB: movieDetails.imdbRating ? "IMDB pisteet: " + movieDetails.imdbRating : "IMDB pisteet: N/A"
                 
                 };
-                htmlData += fillTemplate(currentMovie);
+                htmlData += fillTemplate(currentMovie); // oliskohan nopeampaa ajaa tää vaan tässä inline...
                 });
                 debugCount++; // Debug counter
             } else {
                 console.log("Tapahtuma / elokuva on menneisyydessä");
             }
         }
+    }
+    console.log("Apia haaskattiin tällä ajolla "+apicount+" tokenin verran.")
+    const statusbox = document.getElementById("statusbox");
+    if (apicount < 1) {
+        statusbox.style = "display: block;"
+        statusbox.innerHTML = "Ei tuloksia. Oliskohan tältä päivältä jo kaikki nähty?"
+    } else {
+        statusbox.innerHTML = "";
+        statusbox.style = "display: none;"
     }
     return htmlData;
 }
@@ -185,13 +227,13 @@ async function getNextMovies() {
 async function fetchSchedule() {
     try {
         const url = `https://www.finnkino.fi/xml/Schedule/?area=${selectedTheater}`;
-        console.log(url);
+        // console.log(url);
         const response = await fetch(url);
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
         const xmlStr = await response.text();
-        console.log("Full Async this time!");
+        // console.log("Full Async this time!");
         parseEvents(xmlStr);  // Parse the XML data
     } catch (error) {
         console.error('There has been a problem with your fetch operation:', error);
@@ -214,7 +256,7 @@ function parseEvents(xmlStr) {
             acc[node.nodeName] = node.textContent; // Each child goes to their own index in array
             return acc; // and then we return that arrray to the new name "data"
         }, {}); 
-        console.log("Going...");
+        // console.log("Going...");
         moviesDb[movieId] = data; // Finally we add this show to MoviesDb using current show ID as index and Data with accumulated node names as properties. 
     });
 
@@ -222,7 +264,7 @@ function parseEvents(xmlStr) {
 
 // Call function to fetch schedule
 // fetchSchedule(); // Yes. Now! Fetch movies and fill that moviesDb!
-console.log("Loading and Parsing...");
+// console.log("Loading and Parsing...");
 function displayMovie(movieId) {
     const movie = moviesDb[movieId];
     if (movie) {

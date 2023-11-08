@@ -73,6 +73,12 @@ body, html {
     margin: 0px 14px 20px;
   }
 
+  a {
+    color: greenyellow;
+    font-size: 1em;
+    text-decoration: none;
+    margin: 0px 0px 0px 5px;
+  }
 
 #page-title {
    float: left;
@@ -94,7 +100,12 @@ body, html {
     font-weight: bold;
     margin-top: 6px;
 }
-
+#statusbox {
+    border: 1px solid green;
+    border-radius: 2px;
+    padding: 5px;
+    color: silver;
+}
 .onemovie {
     border-bottom: 5px dashed #333;
     margin-top: 3px;
@@ -170,6 +181,7 @@ body, html {
     color:rgb(240, 240, 240);
     margin-bottom: 8px;
     line-height: 1.1em;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
 
 }
 
