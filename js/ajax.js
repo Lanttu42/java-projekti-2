@@ -152,8 +152,8 @@ async function getNextMovies() {
     const thetime = new Date();
     const shortedDb = abshort(moviesDb);
     //console.log(moviesDb);
-    // const timeNow = thetime.setHours(19,0,0,0); 
-    const timeNow = thetime.getTime(); 
+    const timeNow = thetime.setHours(19,0,0,0); 
+    //const timeNow = thetime.getTime(); 
     const timeMidnight = thetime.setHours(24,0,0,0); 
     let htmlData = `<h2>Seuraavat elokuvat kohteessa: ${Theaters[selectedTheater]}</h2><br>`;
     // const timestamp = Date.parse(dateTimeString);
@@ -161,8 +161,8 @@ async function getNextMovies() {
     let apicount = 0;
     for (let movieId in shortedDb) {
         
-        if ((shortedDb.hasOwnProperty(movieId)) && (debugCount < 3)) { // Debug mode
-        //if (shortedDb.hasOwnProperty(movieId)) {
+        //if ((shortedDb.hasOwnProperty(movieId)) && (debugCount < 3)) { // Debug mode
+        if (shortedDb.hasOwnProperty(movieId)) {
             const movie = shortedDb[movieId];
             //console.log(movie.dttmShowStart);
             const begins = Date.parse(movie.dttmShowStart);
