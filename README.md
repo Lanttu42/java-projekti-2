@@ -23,11 +23,15 @@ Uhm..Ok So ... Yeah. The AJAX XML calls are pretty much the same always, but I d
 - Layout should be nice - who is the judge?
 
 # My Project is using Finnkino API
-Finnkino XML api is publicly available @ https://www.finnkino.fi/xml. The application fixes the main issue in Finnkinos own website and allows me to list movies like "next trains". 
-- When the app is opened, it lists the next movies from every theatre.
-- You can then multiselect theatres with checkboxes to filter out those that are too far away.
-- You can also adjust the time when the movie should start
-- At the end, it lists the few news from Finnkino and random Upcoming movie.
+Finnkinotin is using Finnkino Open API and OMDB API together to build movie list of next upcoming movies today.
+**Main features**
+- When user selects the Theater it is saved to Localstorage
+- Next time the same theater is used by default
+- Not showing past events
+- Not showing tomorrows events
+- If there is less than 30 minutes left, the time is show as minutes
+- Ticket booth link provided
 
+  
 
 
