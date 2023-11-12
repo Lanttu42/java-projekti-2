@@ -79,7 +79,9 @@ body, html {
     text-decoration: none;
     margin: 0px 0px 0px 5px;
   }
-
+h2 {
+    line-height: 1.3em;
+}
 #page-title {
    float: left;
    width: 50%;
@@ -93,6 +95,9 @@ body, html {
     margin-top: 6px;
     font-size: 1.1em;
 }
+.tools {
+    margin-top: 10px;
+}
 #page-settings {
     float: right;
     width: 20%;
@@ -105,6 +110,7 @@ body, html {
     border-radius: 2px;
     padding: 5px;
     color: silver;
+    display: none;
 }
 .onemovie {
     border-bottom: 5px dashed #333;
@@ -217,6 +223,34 @@ a.settings {
     font-size: 1.3em;
     width: 100%;
 }
+
+.loading-screen {
+    font-size: 1.4em;
+    color: #FFF;
+}
+
+.film-reel {
+    border: 5px solid #FFF;
+    margin: 0 auto;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    padding: 10px;
+    border-top: 5px dotted #FFF;
+    border-bottom: 5px dotted #FFF;
+    animation: spin 1s linear infinite;
+}
+#loadingtext {
+    margin: 0 auto;
+    margin-top: 50px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
 
 
 /* Responsiivisuus alle 690px tilassa */

@@ -27,21 +27,34 @@
     <div id="header">
         <div id="page-title"><h1 class="neontitle neonText">Finnkinotin</h1></div>
         <div id="page-settings"><!-- No Settings this time -->></div>
-        <div id="title-date"><span class="headerdate">23.10.2023</span> <span class="headertime">18.22</span></div>
+        <div id="title-date"><span class="headerdate" id="currentDate"></span> <span class="headertime" id="currentTime"></span></div>
     </div>
     <div id="page">
-        <label for="selectType">Valitse tapahtumalaji: </label>
+        <div class="tools">
+            <label for="selectType">Valitse tapahtumalaji: </label>
             <select name="eventType" id="selectType">
                 <option value="Movie">Elokuva</option>
                 <option value="LiveEvent">Tapahtuma</option>
             </select>
-        <div id="SelectCity">
-            <label for="selectTheater">Valitse kaupunki ja teatteri: </label>
-            <select name="eventCity" id="selectTheater">
-                
-            </select>
         </div>
-        <div id="showtime"></div>
+        <div class="tools">
+            <div id="SelectCity">
+                <label for="selectTheater">Valitse kaupunki ja teatteri: </label>
+                <select name="eventCity" id="selectTheater">
+                </select>
+            </div>
+        </div>
+        <div class="tools">
+            <div id="searchBox">
+                <form id="searchForm">
+                    <label for="lookForMovie">Etsi sanaa näistä elokuvista</label>
+                    <input type="text" id="searchThis" name="searchThis">
+                </form>
+            </div>
+        </div>
+        <div id="searchResults"></div>
+        
+        <div id="showtime"><div class="loading-screen"><div id="loadingtext"> Etsitään sulle niit elokuvii... </div><div class="film-reel"> o </div></div></div>
         <div id="statusbox"></div>
         
     </div>
